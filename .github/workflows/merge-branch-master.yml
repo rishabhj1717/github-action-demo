@@ -5,10 +5,10 @@ jobs:
     name: 'Bump Version on master'
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout master branch code'
+      - name: 'Checkout next branch code'
         uses: 'actions/checkout@v3'
         with:
-          ref: master
+          ref: next
 
       - name: 'cat package.json'
         run: cat ./package.json
@@ -23,3 +23,10 @@ jobs:
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: echo "new tag $NEW_TAG"
+
+      - name: 'Merge next to master'
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: master
+          github_token: ${{ github.token }}

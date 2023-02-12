@@ -14,20 +14,18 @@ jobs:
         run: cat ./package.json
 
       - name:  'Automated Version Bump'
+        id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
+          minor-wording:  'add,Adds,new'
+          major-wording:  'MAJOR,cut-major'
           commit-message: 'CI: bumps version to {{version}}'
-
-      - name: 'cat package.json'
-        run: cat ./package.json
+          # patch-wording:  'patch,fixes'
 
       - name: 'Output Step'
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-        run: npm pkg get version | sed 's/"//g'
-
-      - name: 'Check github event data'
-        run: echo "${{ github.event }}"
+        run: echo $NEW_TAG
 
       - name: Merge next -> master
         uses: devmasx/merge-branch@master

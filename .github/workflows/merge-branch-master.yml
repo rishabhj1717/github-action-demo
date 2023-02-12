@@ -15,6 +15,8 @@ jobs:
 
       - name:  'Automated Version Bump'
         uses:  'phips28/gh-action-bump-version@master'
+        with:
+          commit-message: 'CI: bumps version to {{version}}'
 
       - name: 'cat package.json'
         run: cat ./package.json
@@ -22,7 +24,13 @@ jobs:
       - name: 'Output Step'
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+        run: npm pkg get version | sed 's/"//g' >> $NEW_TAG
+
+      - name: 'Output version of package'
         run: echo "new tag $NEW_TAG"
+
+      - name: 'Check github event data'
+        run: echo "${{ github.event }}"
 
       - name: Merge next -> master
         uses: devmasx/merge-branch@master
@@ -30,4 +38,5 @@ jobs:
           type: now
           from_branch: next
           target_branch: master
+          message: Merge next into master
           github_token: ${{ secrets.GITHUB_TOKEN }}

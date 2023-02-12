@@ -1,4 +1,4 @@
-name: Merge next into master
+name: Test workflow to merge a branch to master
 on: workflow_dispatch
 jobs:
   merge_branch:

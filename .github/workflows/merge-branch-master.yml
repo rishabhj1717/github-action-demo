@@ -17,8 +17,8 @@ jobs:
         id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
-          minor-wording:  'add,Adds,new'
-          major-wording:  'MAJOR,cut-major'
+          minor-wording:  'add,Adds,new,feat,minor'
+          major-wording:  'MAJOR,cut-major,BREAKING CHANGE,major'
           commit-message: 'CI: bumps version to {{version}}'
           # patch-wording:  'patch,fixes'
 

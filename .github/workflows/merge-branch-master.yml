@@ -17,7 +17,7 @@ jobs:
         id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
-          minor-wording:  'add,Adds,new,feat,minor'
+          minor-wording:  'add,Adds,new,feat,minor,Update'
           major-wording:  'MAJOR,cut-major,BREAKING CHANGE,major'
           commit-message: 'CI: bumps version to {{version}}'
           # patch-wording:  'patch,fixes'
@@ -33,5 +33,5 @@ jobs:
           type: now
           from_branch: next
           target_branch: master
-          message: Merge next into master
+          message: Merge next with tag $NEW_TAG into master
           github_token: ${{ secrets.GITHUB_TOKEN }}

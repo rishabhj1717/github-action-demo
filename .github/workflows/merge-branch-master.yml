@@ -24,9 +24,10 @@ jobs:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: echo "new tag $NEW_TAG"
 
-      - name: 'Merge next to master'
+      - name: Merge next -> master
         uses: devmasx/merge-branch@master
         with:
           type: now
+          from_branch: next
           target_branch: master
-          github_token: ${{ github.MERGE_MASTER }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

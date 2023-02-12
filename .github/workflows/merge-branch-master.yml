@@ -33,5 +33,5 @@ jobs:
           type: now
           from_branch: next
           target_branch: master
-          message: Merge next with tag "$NEW_TAG" into master
+          message: Merge next into master
           github_token: ${{ secrets.GITHUB_TOKEN }}

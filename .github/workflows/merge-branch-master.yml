@@ -24,10 +24,7 @@ jobs:
       - name: 'Output Step'
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-        run: npm pkg get version | sed 's/"//g' >> $NEW_TAG
-
-      - name: 'Output version of package'
-        run: echo "new tag $NEW_TAG"
+        run: npm pkg get version | sed 's/"//g'
 
       - name: 'Check github event data'
         run: echo "${{ github.event }}"

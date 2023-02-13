@@ -5,6 +5,10 @@ jobs:
     name: 'Check commit difference between next and master'
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout next branch code'
+        uses: 'actions/checkout@v3'
+        with:
+          ref: next
       - name: Get Commit Difference Count Between Two Branches
         id: cdc
         uses: jessicalostinspace/commit-difference-action@v1.0.0

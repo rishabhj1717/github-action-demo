@@ -31,6 +31,7 @@ jobs:
           base_branch: master
 
       - name: Print result
+        if: ${{ steps.cdc.outputs.changed }}
         run: echo ${{ steps.cdc.outputs.changed }}
 
       # - name: Get Commit Difference Count Between Two Branches

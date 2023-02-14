@@ -3,9 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       bump_type:
-        description: 'Describe the type of version bump needed. Specify minor,major(default is patch)'
+        description: 'Describe the type of version bump needed, default is patch'
         required: true
         default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 jobs:
   bump_and_merge:
     name: 'Bump Version on master'

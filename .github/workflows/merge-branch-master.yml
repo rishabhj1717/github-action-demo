@@ -3,9 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       bump_type:
-        description: 'Describe the type of version bump needed. Specify minor,major(default is patch)'
+        description: 'Describe the type of version bump needed, default is patch'
         required: true
         default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 jobs:
   bump_and_merge:
     name: 'Bump Version on master'
@@ -57,4 +62,14 @@ jobs:
           from_branch: next
           target_branch: master
           message: Merge next into master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge master -> next
+        if: steps.cdc.outputs.changed == 'true'
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: master
+          target_branch: next
+          message: Merge master into next
           github_token: ${{ secrets.GITHUB_TOKEN }}

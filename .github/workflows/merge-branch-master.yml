@@ -34,7 +34,7 @@ jobs:
         run: echo ${{ steps.cdc.outputs.changed }}
 
       - name:  'Automated Version Bump'
-        if: steps.cdc.outputs.changed == "true"
+        if: steps.cdc.outputs.changed == 'true'
         id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
@@ -50,7 +50,7 @@ jobs:
       #   run: echo $NEW_TAG
 
       - name: Merge next -> master
-        if: steps.cdc.outputs.changed == "true"
+        if: steps.cdc.outputs.changed == 'true'
         uses: devmasx/merge-branch@master
         with:
           type: now

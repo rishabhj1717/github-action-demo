@@ -23,8 +23,8 @@ jobs:
           ref: next
           fetch-depth: 0
 
-      # - name: 'Echo outputs from checkout step'
-      #   run: echo ${{ toJSON(steps.checkout_id.outputs) }}
+      - name: 'Echo outputs from checkout step'
+        run: echo ${{ toJSON(steps.checkout_id.outputs) }}
 
       - name: 'cat package.json'
         run: cat ./package.json
@@ -64,12 +64,12 @@ jobs:
           message: Merge next into master
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Merge master -> next
-        if: steps.cdc.outputs.changed == 'true'
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: master
-          target_branch: next
-          message: Merge master into next
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Merge master -> next
+      #   if: steps.cdc.outputs.changed == 'true'
+      #   uses: devmasx/merge-branch@master
+      #   with:
+      #     type: now
+      #     from_branch: master
+      #     target_branch: next
+      #     message: Merge master into next
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}

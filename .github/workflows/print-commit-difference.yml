@@ -5,21 +5,24 @@ jobs:
     name: 'Check commit difference between next and master'
     runs-on: ubuntu-latest
     steps:
+      # - name: 'Checkout master branch code'
+      #   id: master_branch
+      #   uses: 'actions/checkout@v3'
+      #   with:
+      #     ref: master
+
+      # - name: 'Print master checkout outputs'
+      #   run: echo ${{ steps.master_branch.outputs }}
+
       - name: 'Checkout next branch code'
-        uses: 'actions/checkout@v3'
-        with:
-          ref: master
-
-      - name: 'Print master head ref'
-        run: echo ${{ github.sha }}
-
-      - name: 'Checkout master branch code'
+        id: next_branch
         uses: 'actions/checkout@v3'
         with:
           ref: next
+          fetch-depth: 0
 
-      - name: 'Print next head ref'
-        run: echo ${{ github.sha }}
+      - name: 'Print next checkout outputs'
+        run: echo ${{ steps.next_branch.outputs }}
 
       - name: Detect changes in next wrt master
         id: cdc

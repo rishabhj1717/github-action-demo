@@ -8,6 +8,7 @@ jobs:
       - name: 'Checkout next branch code'
         uses: 'actions/checkout@v3'
         with:
+          fetch-depth: 0
           ref: next
 
       - name: Detect changes in next wrt master

@@ -8,8 +8,18 @@ jobs:
       - name: 'Checkout next branch code'
         uses: 'actions/checkout@v3'
         with:
-          fetch-depth: 0
+          ref: master
+
+      - name: 'Print master head ref'
+        run: echo ${{ github.sha }}
+
+      - name: 'Checkout master branch code'
+        uses: 'actions/checkout@v3'
+        with:
           ref: next
+
+      - name: 'Print next head ref'
+        run: echo ${{ github.sha }}
 
       - name: Detect changes in next wrt master
         id: cdc

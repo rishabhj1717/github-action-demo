@@ -12,10 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout next branch code'
+        id: checkout_id
         uses: 'actions/checkout@v3'
         with:
           ref: next
           fetch-depth: 0
+
+      # - name: 'Echo outputs from checkout step'
+      #   run: echo ${{ toJSON(steps.checkout_id.outputs) }}
 
       - name: 'cat package.json'
         run: cat ./package.json
@@ -30,7 +34,7 @@ jobs:
         run: echo ${{ steps.cdc.outputs.changed }}
 
       - name:  'Automated Version Bump'
-        if: steps.cdc.outputs.changed == true
+        if: steps.cdc.outputs.changed == "true"
         id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
@@ -46,7 +50,7 @@ jobs:
       #   run: echo $NEW_TAG
 
       - name: Merge next -> master
-        if: steps.cdc.outputs.changed == true
+        if: steps.cdc.outputs.changed == "true"
         uses: devmasx/merge-branch@master
         with:
           type: now

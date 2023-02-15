@@ -7,11 +7,16 @@ jobs:
     steps:
       - name: Checkout master branch
         uses: actions/checkout@master
-
-      - name: Merge master -> next
-        uses: devmasx/merge-branch@master
         with:
-          type: now
-          from_branch: master
-          target_branch: next
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: master
+
+      - name: Merge Fast Forward
+        uses: MaximeHeckel/github-action-merge-fast-forward@v1.1.0
+        with:
+          # Branch to merge
+          branchtomerge: master
+          # Branch that will be updated
+          branch: next
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -14,6 +14,7 @@ on:
 jobs:
   bump_and_merge:
     name: 'Bump Version on master'
+    environment: 'Action Approval'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout next branch code'

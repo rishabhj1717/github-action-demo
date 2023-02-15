@@ -2,16 +2,16 @@ name: Test workflow to merge a branch to master
 on: workflow_dispatch
 jobs:
   merge_branch:
-    name: "Demo to merge next to master"
+    name: "Demo to merge master to next(fast forward)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master branch
         uses: actions/checkout@master
 
-      - name: Merge next -> master
+      - name: Merge master -> next
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: next
-          target_branch: master
+          from_branch: master
+          target_branch: next
           github_token: ${{ secrets.GITHUB_TOKEN }}

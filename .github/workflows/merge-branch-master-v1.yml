@@ -17,7 +17,7 @@ jobs:
     environment: 'test'
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout next branch code'
+      - name: 'Checkout master branch code'
         uses: 'actions/checkout@v3'
         with:
           ref: master
@@ -40,14 +40,14 @@ jobs:
         run: echo ${{ env.COMMIT_DIFF }}
 
       - name:  'Automated Version Bump'
-        if: env.COMMIT_DIFF == true
+        if: env.COMMIT_DIFF == 'true'
         id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
           version-type: ${{ github.event.inputs.bump_type }}
 
       - name: Merge next -> master
-        if: env.COMMIT_DIFF == true
+        if: env.COMMIT_DIFF == 'true'
         uses: devmasx/merge-branch@master
         with:
           type: now

@@ -33,21 +33,21 @@ jobs:
 
       - name: 'Echo compare ref results'
         env:
-          COMMIT_DIFF: ${{ env.MASTER_REF != env.BASE_REF}}
+          COMMIT_DIFF: ${{ env.MASTER_REF != env.BASE_REF }}
         run: echo "COMMIT_DIFF=$COMMIT_DIFF" >> $GITHUB_ENV
 
       - name: 'Echo value'
         run: echo ${{ env.COMMIT_DIFF }}
 
       - name:  'Automated Version Bump'
-        if: env.COMMIT_DIFF
+        if: env.MASTER_REF != env.BASE_REF
         id: version-bump
         uses:  'phips28/gh-action-bump-version@master'
         with:
           version-type: ${{ github.event.inputs.bump_type }}
 
       - name: Merge next -> master
-        if: env.COMMIT_DIFF
+        if: env.MASTER_REF != env.BASE_REF
         uses: devmasx/merge-branch@master
         with:
           type: now

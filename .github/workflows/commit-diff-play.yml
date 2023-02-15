@@ -23,7 +23,7 @@ jobs:
       - name: 'Echo outputs from checkout step'
         run: echo "BASE_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
 
-      - name: Echo compare ref results
+      - name: 'Echo compare ref results'
         env:
           COMMIT-DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
         run: echo "${{ env.MASTER_REF }}" | "${{ env.BASE_REF }}"

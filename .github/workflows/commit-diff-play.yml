@@ -25,9 +25,9 @@ jobs:
 
       - name: 'Echo compare ref results'
         env:
-          COMMIT-DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
+          COMMIT_DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
         run: echo "Hello there"
           # echo "-----------------------------------------------"
 
       - name: Echo value
-        run: echo "$COMMIT-DIFF"
+        run: echo "$COMMIT_DIFF"

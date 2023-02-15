@@ -1,0 +1,44 @@
+name: Commit difference workflow
+on: workflow_dispatch
+jobs:
+  commit_difference:
+    name: 'Find commit difference'
+    # environment: 'test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout master branch code'
+        id: checkout_id
+        uses: 'actions/checkout@v3'
+        with:
+          ref: master
+          # fetch-depth: 0
+
+      - name: 'Echo outputs from checkout step'
+        run: echo "MASTER_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
+
+      - name: 'Checkout next branch code'
+        id: checkout_id
+        uses: 'actions/checkout@v3'
+
+      - name: 'Echo outputs from checkout step'
+        run: echo "BASE_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
+
+      - name: Echo compare ref results
+        env:
+          COMMIT-DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
+        run: |
+          echo "${{ env.MASTER_REF }}" | "${{ env.BASE_REF }}"
+          echo "-----------------------------------------------"
+          echo $COMMIT-DIFF
+
+      - name: 'cat package.json'
+        run: cat ./package.json
+
+      - name: 'Detect changes in next wrt master'
+        id: cdc
+        uses: younited/detect-branch-changes-action@v0.1.3
+        with:
+          base_branch: master
+
+      - name: 'Echo something'
+        run: echo ${{ steps.cdc.outputs.changed }}

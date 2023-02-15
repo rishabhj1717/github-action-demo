@@ -1,0 +1,33 @@
+name: Commit difference workflow
+on: workflow_dispatch
+jobs:
+  commit_difference:
+    name: 'Find commit difference'
+    # environment: 'test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout master branch code'
+        id: checkout_id
+        uses: 'actions/checkout@v3'
+        with:
+          ref: master
+          # fetch-depth: 0
+
+      - name: 'Echo outputs from checkout step'
+        run: echo "MASTER_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
+
+      - name: 'Checkout next branch code'
+        id: checkout_id_v1
+        uses: 'actions/checkout@v3'
+
+      - name: 'Echo outputs from checkout step'
+        run: echo "BASE_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
+
+      - name: 'Echo compare ref results'
+        env:
+          COMMIT_DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
+        run: echo "COMMIT_DIFF=$COMMIT_DIFF" >> $GITHUB_ENV
+          # echo "-----------------------------------------------"
+
+      - name: 'Echo value'
+        run: echo ${{ env.COMMIT_DIFF }}

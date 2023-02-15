@@ -17,7 +17,7 @@ jobs:
         run: echo "MASTER_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
 
       - name: 'Checkout next branch code'
-        id: checkout_id
+        id: checkout_id_v1
         uses: 'actions/checkout@v3'
 
       - name: 'Echo outputs from checkout step'

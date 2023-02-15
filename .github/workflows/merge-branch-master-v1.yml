@@ -1,0 +1,67 @@
+name: Merge next into master with fetch-depth as 0
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Describe the type of version bump needed, default is patch'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+jobs:
+  bump_and_merge:
+    name: 'Bump Version on master'
+    environment: 'test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout next branch code'
+        uses: 'actions/checkout@v3'
+        with:
+          ref: master
+
+      - name: 'Echo outputs from checkout step'
+        run: echo "MASTER_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
+
+      - name: 'Checkout next branch code'
+        uses: 'actions/checkout@v3'
+
+      - name: 'Echo outputs from checkout step'
+        run: echo "BASE_REF=$(/usr/bin/git log -1 --format='%H')" >> $GITHUB_ENV
+
+      - name: 'Echo compare ref results'
+        env:
+          COMMIT_DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
+        run: echo "COMMIT_DIFF=$COMMIT_DIFF" >> $GITHUB_ENV
+
+      - name: 'Echo value'
+        run: echo ${{ env.COMMIT_DIFF }}
+
+      - name:  'Automated Version Bump'
+        if: env.COMMIT_DIFF == true
+        id: version-bump
+        uses:  'phips28/gh-action-bump-version@master'
+        with:
+          version-type: ${{ github.event.inputs.bump_type }}
+
+      - name: Merge next -> master
+        if: env.COMMIT_DIFF == true
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: next
+          target_branch: master
+          message: Merge next into master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Merge master -> next
+      #   if: steps.cdc.outputs.changed == 'true'
+      #   uses: devmasx/merge-branch@master
+      #   with:
+      #     type: now
+      #     from_branch: master
+      #     target_branch: next
+      #     message: Merge master into next
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}

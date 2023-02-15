@@ -26,8 +26,8 @@ jobs:
       - name: 'Echo compare ref results'
         env:
           COMMIT_DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
-        run: echo "Hello there"
+        run: echo "COMMIT_DIFF=$COMMIT_DIFF" >> $GITHUB_ENV
           # echo "-----------------------------------------------"
 
-      - name: Echo value
-        run: echo "$COMMIT_DIFF"
+      - name: 'Echo value'
+        run: echo ${{ env.COMMIT_DIFF }}

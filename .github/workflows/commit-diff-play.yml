@@ -26,10 +26,9 @@ jobs:
       - name: Echo compare ref results
         env:
           COMMIT-DIFF: ${{ env.MASTER_REF == env.BASE_REF}}
-        run: |
-          echo "${{ env.MASTER_REF }}" | "${{ env.BASE_REF }}"
-          echo "-----------------------------------------------"
-          echo "$COMMIT-DIFF"
+        run: echo "$COMMIT-DIFF"
+          # echo "${{ env.MASTER_REF }}" | "${{ env.BASE_REF }}"
+          # echo "-----------------------------------------------"
 
       - name: 'cat package.json'
         run: cat ./package.json

@@ -56,6 +56,16 @@ jobs:
           message: Merge next into master
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Merge Fast Forward
+        uses: MaximeHeckel/github-action-merge-fast-forward@v1.1.0
+        with:
+          # Branch to merge
+          branchtomerge: master
+          # Branch that will be updated
+          branch: next
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # - name: Merge master -> next
       #   if: steps.cdc.outputs.changed == 'true'
       #   uses: devmasx/merge-branch@master

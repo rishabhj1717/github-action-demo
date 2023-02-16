@@ -11,6 +11,11 @@ on:
           - patch
           - minor
           - major
+
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   bump_and_merge:
     name: 'Bump Version on master'

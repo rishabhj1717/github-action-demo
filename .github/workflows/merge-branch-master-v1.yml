@@ -57,12 +57,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout master branch to start with fast forward merge
+        if: env.MASTER_REF != env.BASE_REF
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: master
 
       - name: Merge Fast Forward
+        if: env.MASTER_REF != env.BASE_REF
         uses: MaximeHeckel/github-action-merge-fast-forward@v1.1.0
         with:
           # Branch to merge
@@ -71,13 +73,3 @@ jobs:
           branch: next
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Merge master -> next
-      #   if: steps.cdc.outputs.changed == 'true'
-      #   uses: devmasx/merge-branch@master
-      #   with:
-      #     type: now
-      #     from_branch: master
-      #     target_branch: next
-      #     message: Merge master into next
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -56,13 +56,19 @@ jobs:
           message: Merge next into master
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Checkout master branch to start with fast forward merge
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: master
+
       - name: Merge Fast Forward
         uses: MaximeHeckel/github-action-merge-fast-forward@v1.1.0
         with:
           # Branch to merge
-          branchtomerge: origin/master
+          branchtomerge: master
           # Branch that will be updated
-          branch: origin/next
+          branch: next
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
